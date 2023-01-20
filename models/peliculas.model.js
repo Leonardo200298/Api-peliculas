@@ -1,4 +1,5 @@
 "use strict"
+require('dotenv').config();
 
 // get the client
 const mysql = require('mysql2/promise');
@@ -9,9 +10,9 @@ const mysql = require('mysql2/promise');
 const conseguirConexion = async () => {
     // create the connection
     return await mysql.createConnection({
-        host: 'localhost',
-        user: 'root',
-        database: 'db_peliculas_pe'
+        host: process.env.HOST,
+        user: process.env.USER,
+        database:  process.env.DATABASE
     });
 
 }
@@ -47,4 +48,9 @@ exports.crearPeliculaDB = async (nombre,anio,produccion,recaudacion,id_genero) =
     }catch(error){
         console.log(error)
     }
+}
+exports.editarPeliculaDB = async (nombre,anio,produccion,recaudacion,id_genero,id)=> {
+    const conexion = await conseguirConexion();
+    await conexion.execute("UPDATE peliculas SET nombre = ?, anio = ?, produccion = ?, recaudacion= ?, id_genero = ? WHERE id_peliculas = ?",[nombre,anio,produccion,recaudacion,id_genero,id]);
+
 }
