@@ -38,7 +38,7 @@ exports.crearPelicula = async (req, res) => {
     let recaudacion = req.body.recaudacion;
     let id_genero = req.body.id_genero;
     try {
-        if (nombre === "" || anio === "" || id_genero === "") {
+        if (!nombre || !anio || !id_genero ) {
             res.status(404).send("Necesita llenar los campos nombre, anio y id_genero");
 
         } else {
@@ -52,7 +52,7 @@ exports.crearPelicula = async (req, res) => {
 }
 exports.editarPelicula = async (req, res) => {
     let { id } = req.params;
-    if (req.body.nombre === "" || req.body.anio === "" || req.body.id_genero === "") {
+    if (!req.body.nombre || !req.body.anio || !req.body.id_genero ) {
         res.status(404).send("Necesita llenar los campos nombre, anio y id_genero, para editar");
 
     } else {
